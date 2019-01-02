@@ -7,16 +7,13 @@
 #include <iostream>
 #include <string>
 
-using namespace sf;
-using namespace std;
-
 int main()
 {
-	RenderWindow window(VideoMode(640, 520), "Test", Style::Close);
+	sf::RenderWindow window(sf::VideoMode(640, 520), "Test", sf::Style::Close);
 
 	window.setJoystickThreshold(1.f);
 
-	Font font;
+	sf::Font font;
 	font.loadFromFile("fonts/digifaw.TTF");
 
 	JoystickTester joystick1(font);
@@ -32,46 +29,46 @@ int main()
 
 	while (window.isOpen())
 	{
-		Event event;
+		sf::Event event;
 
 		while (window.pollEvent(event))
 		{
-			if (event.type == Event::Closed)
+			if (event.type == sf::Event::Closed)
 				window.close();
 
-			if (event.type == Event::JoystickConnected)
+			if (event.type == sf::Event::JoystickConnected)
 			{
 				int ID = event.joystickConnect.joystickId;
 
-				cout << "Joystick connected" << endl;
-				cout << "ID: " << ID << endl;
-				auto identification = Joystick::getIdentification(ID);
+				std::cout << "Joystick connected" << std::endl;
+				std::cout << "ID: " << ID << std::endl;
+				auto identification = sf::Joystick::getIdentification(ID);
 
-				cout << "Name: " << string(identification.name) << endl;
-				cout << "Product ID: " << identification.productId << endl;
-				cout << "Vendor ID: " << identification.vendorId << endl;
+				std::cout << "Name: " << std::string(identification.name) << std::endl;
+				std::cout << "Product ID: " << identification.productId << std::endl;
+				std::cout << "Vendor ID: " << identification.vendorId << std::endl;
 			}
-			if (event.type == Event::JoystickDisconnected)
+			if (event.type == sf::Event::JoystickDisconnected)
 			{
-				cout << "Joystick disconnected\nID: " << event.joystickConnect.joystickId << endl;
+				std::cout << "Joystick disconnected\nID: " << event.joystickConnect.joystickId << std::endl;
 			}
 
-			if (event.type == Event::JoystickButtonPressed)
+			if (event.type == sf::Event::JoystickButtonPressed)
 			{
-				cout << "Button pressed: " << event.joystickButton.button << endl;
+				std::cout << "Button pressed: " << event.joystickButton.button << std::endl;
 			}
-			if (event.type == Event::JoystickMoved)
+			if (event.type == sf::Event::JoystickMoved)
 			{
 				switch (event.joystickMove.axis)
 				{
-				case Joystick::X: joystick1.setStickPositionX(event.joystickMove.position);	break;
-				case Joystick::Y: joystick1.setStickPositionY(event.joystickMove.position);	break;
-				case Joystick::Z: joystick2.setStickPositionX(event.joystickMove.position);	break;
-				case Joystick::R: joystick2.setStickPositionY(event.joystickMove.position);	break;
-				case Joystick::U: joystick4.setStickPositionX(event.joystickMove.position);	break;
-				case Joystick::V: joystick4.setStickPositionY(event.joystickMove.position);	break;
-				case Joystick::PovX: joystick3.setStickPositionX(event.joystickMove.position); break;
-				case Joystick::PovY: joystick3.setStickPositionY(-event.joystickMove.position); break;
+				case sf::Joystick::X: joystick1.setStickPositionX(event.joystickMove.position);	break;
+				case sf::Joystick::Y: joystick1.setStickPositionY(event.joystickMove.position);	break;
+				case sf::Joystick::Z: joystick2.setStickPositionX(event.joystickMove.position);	break;
+				case sf::Joystick::R: joystick2.setStickPositionY(event.joystickMove.position);	break;
+				case sf::Joystick::U: joystick4.setStickPositionX(event.joystickMove.position);	break;
+				case sf::Joystick::V: joystick4.setStickPositionY(event.joystickMove.position);	break;
+				case sf::Joystick::PovX: joystick3.setStickPositionX(event.joystickMove.position); break;
+				case sf::Joystick::PovY: joystick3.setStickPositionY(-event.joystickMove.position); break;
 				}
 			}
 		}
